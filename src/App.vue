@@ -1,18 +1,37 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import axios from 'axios'
+import { useLeaflet } from '@/composables/useLeaflet'
 
-onMounted(() => {
-  const map = window.L.map('map-wrapper').setView([51.505, -0.09], 13)
-  window.L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  }).addTo(map)
-
-  window.L.marker([51.5, -0.09])
-    .addTo(map)
-    .bindPopup('A pretty CSS popup.<br> Easily customizable.')
-    .openPopup()
+const { render } = useLeaflet('map-wrapper', {
+  pos: [51.5, -0.09],
+  zoom: 13,
+  marker: { pos: [51.5, -0.09] }
 })
+
+// axios.get(
+//   `https://geo.ipify.org/api/v2/country,city?apiKey=${import.meta.env.VITE_IP_GEOLOCATION_DB}`
+// )
+const resp = {
+  ip: '179.87.129.121',
+  location: {
+    country: 'BR',
+    region: 'S\u00e3o Paulo',
+    city: 'Cerqueira C\u00e9sar',
+    lat: -23.56383,
+    lng: -46.66199,
+    postalCode: '',
+    timezone: '-03:00',
+    geonameId: 12377009
+  },
+  as: {
+    asn: 26599,
+    name: 'TELEF\ufffdNICA BRASIL S.A',
+    route: '179.84.0.0\/14',
+    domain: 'http:\/\/www.telefonica.com.br',
+    type: ''
+  },
+  isp: 'TELEF\u00d4NICA BRASIL AS26599'
+}
 </script>
 
 <template>
