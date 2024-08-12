@@ -15,6 +15,27 @@ body {
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
-  font-size: 18px;
+  font-size: 14px;
   color: $very-dark-gray;
+
+  @media screen and (min-width: $bp-medium) {
+    font-size: 18px;
+  }
+}
+
+.container {
+  padding: 0 15px;
+  margin: 0 auto;
+  max-width: 100%;
+  position: relative;
+
+  @media screen and (min-width: $bp-small) {
+    width: 700px;
+  }
+  @media screen and (min-width: $bp-medium) {
+    width: 900px;
+  }
+  @media screen and (min-width: $bp-large) {
+    width: 1200px;
+  }
 }
