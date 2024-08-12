@@ -146,7 +146,7 @@ onMounted(() => {
       padding: 7.5px;
       text-align: center;
       font-size: 18px;
-      font-weight: 700;
+      font-weight: 500;
 
       h4 {
         color: #{$dark-gray}99;
