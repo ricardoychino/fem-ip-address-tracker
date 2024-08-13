@@ -32,6 +32,8 @@ export const useIPTracking = defineStore('tracking', () => {
   // Actions
   const search = (str: string): void => {
     try {
+      resetTrackError()
+
       if (cachedMap.has(str)) {
         currentData.value = cachedMap.get(str) as GeolocationResponseType2
       } else {
@@ -50,7 +52,7 @@ export const useIPTracking = defineStore('tracking', () => {
         (async () => {
           await doFetch(queries)
 
-          updateValues()
+          updateValues(str)
         })()
       }
     } catch (err: unknown) {
@@ -65,12 +67,15 @@ export const useIPTracking = defineStore('tracking', () => {
   }
 
   // Internal method
-  const updateValues = () => {
+  const updateValues = (searchKey: string = '') => {
     if (response.value) {
       currentData.value = response.value
       cachedMap.add(response.value.ip, response.value)
       if (response.value.as.domain) {
         cachedMap.add(response.value.as.domain, response.value)
+      }
+      if (searchKey) {
+        cachedMap.add(searchKey, response.value)
       }
     }
   }

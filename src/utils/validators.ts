@@ -11,7 +11,7 @@ export const isValidIP = (str: string) => {
 }
 
 export const isValidDomain = (str: string) => {
-  if (!str.startsWith('https://') && !str.startsWith('http://')) return false
+  // if (!str.startsWith('https://') && !str.startsWith('http://')) return false
 
   const text = str.split('/').pop() || ''
 

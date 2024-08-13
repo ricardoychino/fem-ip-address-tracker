@@ -55,11 +55,15 @@ const { trackError } = storeToRefs(store)
     border: none;
     padding: 15px;
     outline: none;
+    font-size: 16px;
     border-radius: $radius 0 0 $radius;
 
     &::placeholder {
       color: $dark-gray;
       opacity: 0.5;
+    }
+    @media screen and (min-width: $bp-medium) {
+      font-size: 18px;
     }
   }
   button {
