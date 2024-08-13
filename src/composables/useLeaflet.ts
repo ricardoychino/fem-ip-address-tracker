@@ -29,7 +29,9 @@ export const useLeaflet = (elementId: MaybeRefOrGetter<string>, initialOptions: 
     }
 
     if (!mapInstance.value) {
-      mapInstance.value = LeafLet.map(toValue(elementId))
+      mapInstance.value = LeafLet.map(toValue(elementId), {
+        zoomControl: false,
+      })
     }
 
     mapInstance.value.setView(options.pos, options?.zoom)
