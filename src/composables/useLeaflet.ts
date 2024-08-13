@@ -5,7 +5,6 @@ import type { Map, LatLngExpression } from 'leaflet'
 
 export interface UseLeafletProps {
   render: (options: UseLeafletOptions) => void
-  // setMarker: (lat: number, lng: number) => void
 }
 
 export interface UseLeafletOptions {
@@ -29,7 +28,11 @@ export const useLeaflet = (elementId: MaybeRefOrGetter<string>, initialOptions: 
       options = initialOptions
     }
 
-    mapInstance.value = LeafLet.map(toValue(elementId)).setView(options.pos, options?.zoom)
+    if (!mapInstance.value) {
+      mapInstance.value = LeafLet.map(toValue(elementId))
+    }
+
+    mapInstance.value.setView(options.pos, options?.zoom)
 
     LeafLet.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution:
