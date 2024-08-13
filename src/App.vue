@@ -1,11 +1,6 @@
 <script setup lang="ts">
-import InputField from '@/components/InputField.vue'
-import TrackerMap from '@/components/TrackerMap.vue'
-import { useIPTracking } from '@/stores/ip-tracking'
-const { search } = useIPTracking()
-const handleSubmit = (value: string) => {
-  search(value)
-}
+import InputField from '@/components/IPTrackerInput.vue'
+import IPTrackerMap from '@/components/IPTrackerMap.vue'
 </script>
 
 <template>
@@ -14,11 +9,11 @@ const handleSubmit = (value: string) => {
       <div class="container">
         <h1 class="app-title">IP Address Tracker</h1>
 
-        <InputField placeholder="Search for any IP address or domain" @submitted="handleSubmit" />
+        <InputField placeholder="Search for any IP address or domain" />
       </div>
     </header>
 
-    <TrackerMap />
+    <IPTrackerMap />
   </main>
 </template>
 
