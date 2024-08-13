@@ -5,6 +5,8 @@ export type UseCachedResponsesProps<T> = {
   add: (key: string, value: T) => void,
   has: (key: string) => boolean,
   get: (key: string) => T | undefined,
+  getFirst: () => T | null,
+  size: () => number,
   clear: () => void
 }
 
@@ -23,6 +25,8 @@ export const useCachedResponses = <T>(key: string, initialValue?: MaybeRefOrGett
   }
   const has = (key: string) => map.value.has(key)
   const get = (key: string) => map.value.get(key)
+  const getFirst = () => [...map.value.values()][0] || null
+  const size = () => map.value.size
   const clear = () => {
     map.value.clear()
   }
@@ -47,5 +51,5 @@ export const useCachedResponses = <T>(key: string, initialValue?: MaybeRefOrGett
     window.removeEventListener('storage', handleStorageEvent)
   })
 
-  return { add, has, get, clear }
+  return { add, has, get, getFirst, size, clear }
 }
