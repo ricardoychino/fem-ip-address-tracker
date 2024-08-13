@@ -14,7 +14,7 @@ export interface UseLeafletOptions {
 }
 
 const icon = LeafLet.icon({
-  iconUrl: '/src/assets/images/icon-location.svg',
+  iconUrl: '/images/icon-location.svg',
   iconAnchor: [23, 56]
 })
 
