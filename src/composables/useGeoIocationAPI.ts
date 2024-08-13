@@ -1,30 +1,25 @@
-import { ref, toValue, watchEffect } from 'vue'
+import { ref } from 'vue'
 import axios from 'axios'
-import type { Ref, MaybeRefOrGetter } from 'vue'
-import type { GeolocationResponseType2 } from '@/types/GeolocationAPI'
+import type { Ref } from 'vue'
+import type { QueryParams, GeolocationResponseType2 } from '@/types/GeolocationAPI'
 
-const baseURL = `https://geo.ipify.org/api/v2/country`
+const baseURL = `https://geo.ipify.org/api/v2/country,city`
 
-interface InputParams {
-  ipAddress?: string,
-  domain?: string
+interface useGeolocationAPIProps {
+  response: Ref<GeolocationResponseType2 | null>,
+  load: (input?: QueryParams) => void
 }
 
-export const useGeolocationAPI = (input: MaybeRefOrGetter<InputParams>): Ref<GeolocationResponseType2 | null> => {
+export const useGeolocationAPI = (): useGeolocationAPIProps => {
 
   const apiKey = import.meta.env.VITE_IP_GEOLOCATION_DB
+  const response = ref<GeolocationResponseType2 | null>(null)
 
-  const result = ref<GeolocationResponseType2 | null>(null)
-
-  const fetch = async (input: InputParams) => {
+  const load = async (input?: QueryParams) => {
     const resp = await axios.get(baseURL, { params: { ...input, apiKey } })
 
-    result.value = resp.data
+    response.value = resp.data
   }
 
-  watchEffect(() => {
-    fetch(toValue(input))
-  })
-
-  return result
+  return { response, load }
 }

@@ -1,22 +1,11 @@
 <script setup lang="ts">
 import InputField from '@/components/InputField.vue'
 import TrackerMap from '@/components/TrackerMap.vue'
-import axios from 'axios'
-import { useLeaflet } from '@/composables/useLeaflet'
-import type { UseLeafletOptions } from '@/composables/useLeaflet'
-
-const { render } = useLeaflet('map-wrapper', {
-  pos: [-23.56383, -46.66199],
-  zoom: 13
-})
-
-// axios.get(
-//   `https://geo.ipify.org/api/v2/country?apiKey=${import.meta.env.VITE_IP_GEOLOCATION_DB}`
-// )
-
-// render({
-//   pos: [resp.location.lat, resp.location.lng]
-// })
+import { useIPTracking } from '@/stores/ip-tracking'
+const { search } = useIPTracking()
+const handleSubmit = (value: string) => {
+  search(value)
+}
 </script>
 
 <template>
@@ -25,7 +14,7 @@ const { render } = useLeaflet('map-wrapper', {
       <div class="container">
         <h1 class="app-title">IP Address Tracker</h1>
 
-        <InputField value="" placeholder="Search for any IP address or domain" />
+        <InputField placeholder="Search for any IP address or domain" @submitted="handleSubmit" />
       </div>
     </header>
 

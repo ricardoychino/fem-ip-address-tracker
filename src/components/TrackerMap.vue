@@ -1,22 +1,47 @@
+<script setup lang="ts">
+import { useIPTracking } from '@/stores/ip-tracking'
+import { useLeaflet } from '@/composables/useLeaflet'
+import { storeToRefs } from 'pinia'
+import { watch } from 'vue'
+
+const store = useIPTracking()
+
+const { ipAddress, location, timezone, isp, position } = storeToRefs(store)
+
+const { render } = useLeaflet('map-wrapper', {
+  pos: position.value,
+  zoom: 13
+})
+
+watch(
+  () => position.value,
+  (newValue) => {
+    console.log(newValue)
+    render({ pos: newValue })
+  },
+  { deep: true }
+)
+</script>
+
 <template>
   <div id="map">
     <div class="container">
       <div class="infos">
         <div class="info-item">
           <h4>IP Address</h4>
-          <span>192.212.174.101</span>
+          <span>{{ ipAddress }}</span>
         </div>
         <div class="info-item">
           <h4>Location</h4>
-          <span>Brooklyn, NY 10001</span>
+          <span>{{ location }}</span>
         </div>
         <div class="info-item">
           <h4>Timezone</h4>
-          <span>UTC -05:00</span>
+          <span>{{ timezone }}</span>
         </div>
         <div class="info-item">
           <h4>ISP</h4>
-          <span>SpaceX Starlink</span>
+          <span>{{ isp }}</span>
         </div>
       </div>
     </div>
@@ -42,6 +67,7 @@
     right: 15px;
     z-index: 1000;
     top: -7.5vh;
+    box-shadow: 0 1px 15px -5px #{$very-dark-gray}b3;
 
     .info-item {
       padding: 7.5px;
@@ -62,6 +88,7 @@
         font-size: 20px;
         text-align: left;
         flex-grow: 1;
+        flex-basis: 25%;
         padding: 0 20px;
 
         &:not(:first-of-type) {

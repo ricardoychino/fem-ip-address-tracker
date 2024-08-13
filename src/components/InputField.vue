@@ -3,19 +3,21 @@ import { ref } from 'vue'
 import type { InputHTMLAttributes } from 'vue'
 
 interface Props extends /* @vue-ignore */ InputHTMLAttributes {
-  value: string
+  value?: string
 }
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  value: ''
+})
 defineEmits<{
-  submit: [value: string]
+  (e: 'submitted', value: string): void
 }>()
 
 const internal = ref<string>(props.value)
 </script>
 
 <template>
-  <form class="ip-input" @submit.prevent="$emit('submit', internal)">
-    <input type="text" v-bind="$attrs" v-model.lazy="internal" />
+  <form class="ip-input" @submit.prevent="$emit('submitted', internal)">
+    <input type="text" v-bind="$attrs" v-model="internal" />
     <button type="submit">
       <img src="@/assets/images/icon-arrow.svg" />
     </button>
